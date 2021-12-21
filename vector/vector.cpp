@@ -35,7 +35,7 @@ void del(vector<int>& v) // удал€ющую элементы вектора через один.
     vector <int> ::iterator i;
     for (i = v.begin(); i != v.end(); i += 2) 
     {
-        i = v.erase(i);
+        i = v.erase(i); //”дал€ет элемент, на который указывает итератор i; возвращает итератор, указывающий на элемент, расположенный после удаленного элемента.
         if (i == v.end()) return;
     }
 
@@ -66,19 +66,19 @@ vector<int> repeat(unsigned int n, vector<int> v) // неотрицательное целое число
 vector<int>::iterator find_second(vector<int> v, int value) // наход€щую второе вхождениданного значени€ value в заданный вектор v
 {
     vector<int>::iterator i;
-    i = find(v.begin(), v.end(), value);
+    i = find(v.begin(), v.end(), value); //ищем первое вхождение
 
-    if (i == v.end()) return i;
+    if (i == v.end()) return i; //нет такого значени€
     else {
         i++;
-        i = find(i, v.end(), value);
+        i = find(i, v.end(), value); //ищем второе вхождение
         return i;
     }
 }
 vector<int>::iterator find_last(vector<int> v, int value) // наход€щую последнее вхождениданного элемента в заданный вектор.
 {
     vector<int>::iterator i = v.begin();
-    vector<int>::iterator j = find(v.begin(), v.end(), value);
+    vector<int>::iterator j = find(v.begin(), v.end(), value); //ищем первое вхождение
     for (unsigned int k = 0; k < v.size() && i != v.end(); ++k) 
     {
         i++;
@@ -122,7 +122,8 @@ vector<int>::iterator find_last_bound(vector<int> sort_v, int value) //возвращаю
     }
     return i;
 }
-void find_index(vector<double> v, double x, int& i, int& j)
+void find_index(vector<double> v, double x, int& i, int& j) //принимающую отсортированный вектор целых чисел, значение искомого элемента и возвращающую 
+//индекс последнего элемента вектора, имеющего искомое значение.
 {
     vector<double>::iterator a, b, c = v.begin();
     a = upper_bound(v.begin(), v.end(), x);

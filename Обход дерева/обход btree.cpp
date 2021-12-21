@@ -54,7 +54,7 @@ int f_height(BNode* t) { //возвращает высоту дерева
 	}
 	return 1 + max(f_height(t->left), f_height(t->right));
 }
-void f_reflect(BNode* t) { //меняет дерево на его зеркальное отражение
+void f_reflect(BNode* t) { //меняет дерево на его зеркальное отражение(правые и левые сыновья каждого узла меняются местами).
 	if (t == nullptr) {
 		return; 
 	}
@@ -74,24 +74,11 @@ int f_mult(BNode* t) { //возвращает произведение данных в узлах, у которых есть 
 	}
 	if (t->left != nullptr && t->right != nullptr) 
 	{
-		return (t->data) * f_mult(t->left) * f_mult(t->right);
+		return (t->data) * f_mult(t->left) * f_mult(t->right); // тоданные найденного узла участвуют в сумме
 	}
 	else 
 	{
 		return f_mult(t->left) * f_mult(t->right);
-	}
-}
-int f_eval(BNode* t) { //вычисляет выражение, заданное данным двоичным деревом
-	if (t->left == nullptr && t->right == nullptr) 
-	{
-		return t->data;
-	}
-	else if (t->left != nullptr || t->right != nullptr)
-	{
-		if (t->data == 1) return f_eval(t->left) + f_eval(t->right);
-		if (t->data == 2) return f_eval(t->left) - f_eval(t->right);
-		if (t->data == 3) return f_eval(t->left) * f_eval(t->right);
-		if (t->data == 4) return (float)f_eval(t->left) / f_eval(t->right);
 	}
 }
 
@@ -100,15 +87,15 @@ template <class T> BNode* f_find(T d, BNode* t) { //принимающий параметр d типа 
 		return t;
 	}
 	if (t != nullptr) {
-		if (f_find(d, t->left) != nullptr)
+		if (f_find(d, t->left) != nullptr) // чтобы не вызвать для nullptr рекурсию (левое поддерев отекущего узла != nullptr)
 		{
 			return f_find(d, t->left);
 		}
-		else if (find(d, t->right) != nullptr)
+		else if (find(d, t->right) != nullptr) // правое поддерево текущего узла != nullptr)
 		{
 			return f_find(d, t->right);
 		}
-		else return nullptr;
+		else return nullptr; //не нашли d
 	}
 }
 int f_min(int m, BNode* t) { //возвращающую минимальное значение данных в узлах дерева

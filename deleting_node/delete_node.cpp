@@ -22,10 +22,10 @@ void f_print(BNode* r, int indent = 0) { // indent - отступ
 void f_del(BNode*& t) //удаление поддеревьев узла t
 {
 	if (t == nullptr) return;
-	f_del(t->left);
-	f_del(t->right);
-	delete t;
-	t = nullptr;
+	f_del(t->left); // удалить левое поддерево
+	f_del(t->right); // удалить правое поддерево
+	delete t; // удалить сам узел
+	t = nullptr; // обнулить указатель
 }
 struct BTree
 {
@@ -68,15 +68,15 @@ struct BTree
 	}
 	template <class T> void enlarge(T d, BNode* p) //принимающий объект d типа int, и заменяющий в дереве все нулевые указатели указателями на новые узлы дерева с данными d
 	{
-		if (p->left == nullptr) // если лист (левый), то создаем новый узел с данными d
+		if (p->left == nullptr) // если у текущего узла нет левого потомка, то создаем новый узел с данными d
 		{
 			p->left = new BNode(d);
 		}
-		if (p->right == nullptr)  // если лист (правый), то создаем новый узел с данными d
+		if (p->right == nullptr)  // еесли у текущего узла нет правого потомка, то создаем новый узел с данными d
 		{
 			p->right = new BNode(d);
 		}
-		else ///если текущий узел не лист, рекурсивно вызываем enlarge и продолжаем искать
+		else ///если текущий узел имеет обоив потомков, рекурсивно вызываем enlarge и продолжаем искать
 		{
 			enlarge(d, p->left);
 			enlarge(d, p->right);

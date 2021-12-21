@@ -11,11 +11,11 @@ struct BNode //структура, описывающая узел дерева
 void f_print(BNode* r, int indent = 0) // indent - отступ
 {
 	if (r == nullptr) return;
-	f_print(r->right, indent + 3);
-	for (int i = 0; i < indent; i++)
+	f_print(r->right, indent + 3); // рекурсивный вызов для ?левого? поддерева с отступом
+	for (int i = 0; i < indent; i++) // печать пробелов в количестве indent штук
 		cout << ' ';
-	cout << r->data << endl;
-	f_print(r->left, indent + 3);
+	cout << r->data << endl; // печать данных узла
+	f_print(r->left, indent + 3);// рекурсивный вызов для ?правого? поддерева с отступом
 }
 
 struct BTree //описывает двоичные деревья
@@ -30,19 +30,19 @@ struct BTree //описывает двоичные деревья
 
 BNode* left_knot(BNode* root) { //метод метод, возвращающий указатель на самый левый узел
 	BNode* t = root;
-	while (t->left != nullptr) {
+	while (t->left != nullptr) { //все время заходим в левое поддерево до самого левого узела
 		t = t->left;
 	}
 	return t;
 }
 void del_left_knot(BNode* root) { // написать метод, удаляющий самый левый узел
 	BNode* t = root;
-	while (t->left->left != nullptr) {
+	while (t->left->left != nullptr) { //доходим до родителя самого левого узла
 		t = t->left;
 	}
-	BNode* tmp = t->left->right;
-	delete t->left;
-	t->left = tmp;
+	BNode* tmp = t->left->right; //запоминаем правое поддерево самого левого узла, который будем удалять
+	delete t->left; //удаляем самый левый узел 
+	t->left = tmp; //присваиваем образовавшийся висячий указатель tmp.
 	delete tmp;
 }
 void put_left_knot(BNode* root, int data) { //метод, вставляющий в дерево левого сына у самого левого узла
@@ -52,10 +52,10 @@ void put_left_knot(BNode* root, int data) { //метод, вставляющий
 }
 BNode* left_leaf(BNode* root) { //метод, возвращающий указатель на самый левый лист
 	BNode* t = left_knot(root); // доходим до самого левого узла
-	while (t->left != nullptr || t->right != nullptr) { 
+	while (t->left != nullptr || t->right != nullptr) { //до тех пор пока указатель на правое или левое поддерево текущего узла не равен nullptr
 		if (t->left != nullptr) 
 		{
-			t = t->left;
+			t = t->left; //продолжаем поиск
 		}
 		else
 		{
@@ -76,14 +76,14 @@ void del_left_leaf(BNode* root) { //метод, удаляющий самый л
 		else {
 			t = t->right;
 		}
-	}
+	} //находим (родителя?) самого левый лист, т.к. в последний раз t - успеваает поменять знаечние и указывает нп=а слл, а  q не успевает присвоится ещещ пвз
 	if (q->left != nullptr) {
-		q->left = nullptr; // после удаления указывает на nullptr
+		q->left = nullptr; // зануляем указатели, если это левый потомок родителя слл
 	}
 	else {
-		q->right = nullptr; // после удаления указывает на nullptr
+		q->right = nullptr; // зануляем указатели, если это правый потомок родителя слл
 	}
-	delete t;
+	delete t; // удаляем лист
 }
 
 int main()
